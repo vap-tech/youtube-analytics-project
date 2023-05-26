@@ -16,6 +16,10 @@ class Channel:
         self.channel = yt.channels().list(id=channel_id, part='snippet,statistics').execute()
         self.title = self.channel['items'][0]['snippet']['title']
         self.video_count = int(self.channel['items'][0]['statistics']['videoCount'])
+        self.description = self.channel['items'][0]['snippet']['description']
+        self.subscriber_count = int(self.channel['items'][0]['statistics']['subscriberCount'])
+        self.view_count = int(self.channel['items'][0]['statistics']['viewCount'])
+
 
     @property
     def channel_id(self):
