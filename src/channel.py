@@ -51,7 +51,7 @@ class Channel:
 
     @classmethod
     def get_service(cls):
-        return build('youtube', 'v3', developerKey=cls.api_key)  # объект для работы с API
+        return cls.yt  # объект для работы с API
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
