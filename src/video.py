@@ -6,20 +6,29 @@ class Video:
 
     def __init__(self, video_id: str):
         """
-       - id видео
-       - название видео
-       - ссылка на видео
-       - количество просмотров
-       - количество лайков
+        - id видео
+        - название видео
+        - ссылка на видео
+        - количество просмотров
+        - количество лайков
          """
+        try:
+            self.vr = self.yt.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                            id=video_id
+                                            ).execute()
+            self.title = self.vr['items'][0]['snippet']['title']
+            self.video_title: str = self.vr['items'][0]['snippet']['title']
+            self.view_count: int = self.vr['items'][0]['statistics']['viewCount']
+            self.like_count: int = self.vr['items'][0]['statistics']['likeCount']
 
-        self.vr = self.yt.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                        id=video_id
-                                        ).execute()
-        self.id: str = self.vr['items'][0]['id']
-        self.video_title: str = self.vr['items'][0]['snippet']['title']
-        self.view_count: int = self.vr['items'][0]['statistics']['viewCount']
-        self.like_count: int = self.vr['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.title = None
+            self.video_title = None
+            self.view_count = None
+            self.like_count = None
+
+        finally:
+            self.id: str = video_id
 
     def __str__(self) -> str:
         return self.video_title
